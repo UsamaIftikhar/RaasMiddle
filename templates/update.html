@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Update</title>
+</head>
+<style>
+    body{
+    background-color: darkslategray;
+    }
+</style>
+<body>
+<div class="container">
+     <div class='row'>
+        <div class='col-sm-6 col-sm-offset-3'>
+            {% for message in messages %}
+            <div class="alert alert-info alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{message}}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class='col-sm-6'></div>
+    <div class='panel panel-default'>
+        <div class='panel-heading'>Update  </div>
+        <div class='panel-body'>
+            <form method="POST" class="post-form" enctype="multipart/form-data">
+                {% csrf_token %}
+                 {{ form.as_p }}
+
+                <button type="submit" class="btn btn-success">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
