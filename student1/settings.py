@@ -34,12 +34,14 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'account',
+    'myapi.apps.MyapiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -76,7 +78,7 @@ WSGI_APPLICATION = 'student1.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-DATABASES = {'default': dj_database_url.config(default='postgres://postgres:123456789@localhost:5432/student')}
+DATABASES = {'default': dj_database_url.config(default='postgres://postgres:123456789@localhost:5432/fyp1')}
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',

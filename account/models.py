@@ -26,3 +26,20 @@ class addapps(models.Model):
     webaddress = models.CharField(max_length=15)
     user_id = models.ForeignKey(userInfo, on_delete=models.CASCADE)
 
+class company(models.Model):
+
+    company_id=models.UUIDField(primary_key=True)
+    email = models.EmailField(max_length=100)
+    password = models.CharField(max_length=15)
+
+class APP(models.Model):
+
+
+    app_id=models.UUIDField(primary_key=True)
+    appname = models.CharField(max_length=15)
+    webaddress = models.CharField(max_length=15)
+    company_id = models.ForeignKey(company, on_delete=models.CASCADE)
+
+
+class Keys(models.Model):
+    key_id=models.UUIDField(primary_key=True)
