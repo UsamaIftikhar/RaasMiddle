@@ -291,7 +291,7 @@ def dashboard(request):
 
 def logout(request):
     del request.session['email']
-    return redirect('login')
+    return redirect('newlogin')
 
 from rest_framework import viewsets
 
