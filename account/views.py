@@ -274,6 +274,8 @@ def newaddapp(request):
             form = NewAppForm(request.POST, request.FILES)
             form.save()
             keyObj.save()
+            messages.error(request,"COMPANY ID: " + str(credentials.company_id ))
+            messages.error(request,"APP ID: "+ str(app_id) )
             return redirect('newaddapp')
         else:
             messages.error(request, 'Invalid Credentials')
