@@ -19,3 +19,14 @@ class AppsSerializer(serializers.HyperlinkedModelSerializer):
             'webaddress',
             'company_id',
                 )
+
+class VerifyKeySerializer(serializers.ModelSerializer):
+    Apps = AppsSerializer()
+
+    class Meta:
+        model = company
+        fields = (
+            'company_id',
+            'email',
+            'password',
+        )

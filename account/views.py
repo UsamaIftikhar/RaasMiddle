@@ -293,7 +293,7 @@ def logout(request):
     del request.session['email']
     return redirect('newlogin')
 
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 
 from myapi.serializers import *
 
@@ -306,3 +306,52 @@ class CompanyViewSet(viewsets.ModelViewSet):
 class AppsViewSet(viewsets.ModelViewSet):
     queryset = APP.objects.all()
     serializer_class = AppsSerializer
+
+class AppsViewSet(viewsets.ModelViewSet):
+    queryset = APP.objects.all()
+    serializer_class = AppsSerializer
+
+
+# class VerifyKeyViewSet(viewsets.ModelViewSet):
+#     # sequerysetApps = APP.objects.all()
+#     serializer_class = AppsSerializer
+#
+#     def get_queryset(self):
+#         """
+#         Optionally restricts the returned purchases to a given user,
+#         by filtering against a `username` query parameter in the URL.
+#         """
+#         queryset = APP.objects.all()
+#         appid = self.request.query_params.get('appid', None)
+#         companyid = self.request.query_params.get('companyid', None)
+#         if appid is not None and companyid is not None:
+#             queryset = queryset.filter(app_id=appid , company_id=companyid)
+#         return queryset
+#
+
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.http import HttpResponse,JsonResponse
+# @api_view()
+# @permission_classes([AllowAny])
+def specsView(request,appid,companyid):
+
+    queryset = APP.objects.all()
+    row=None
+    objApp=None
+    if appid is not None and companyid is not None:
+            objApp = queryset.filter(app_id=appid , company_id=companyid)
+
+
+    if objApp is None:
+        return JsonResponse({}, safe=False)
+    data = list(objApp)
+    app=objApp.first()
+    import json
+    from django.forms.models import model_to_dict
+    obj=  model_to_dict(app)
+    return JsonResponse(obj, safe=False)
+
+
+
