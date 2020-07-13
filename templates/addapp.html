@@ -158,6 +158,39 @@
 {#                <button type="submit" class="btn btn-success">Save</button>#}
 {#            </form>#}
         </div>
+ <div>
+
+                                        <h4 class="header-title">Company Credentials</h4>
+
+    <table style="width:100%">
+    <tr>
+        <th>Company ID</th>
+    </tr>
+        <tr>
+            <td> {{ companyID }}</td>
+        </tr>
+    </table>
+ </div>
+    <br>
+    <div>
+
+                                        <h4 class="header-title">Your Apps</h4>
+
+    <table style="width:100%">
+    <tr>
+        <th>APP Name</th>
+        <th>APP ID</th>
+    </tr>
+                             {% for i in applist %}
+      <tr>
+      <td> {{ i.appname }}</td>
+      <td>  {{  i.app_id }}</td>
+{##}
+{#        {{ i.appname }}  &nbsp;&nbsp;   {{  i.app_id }}#}
+      </tr>
+    {% endfor %}
+
+    </table>
     </div>
 </div>
     </div>

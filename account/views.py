@@ -52,6 +52,11 @@ def newregister(request):
             messages.error(request, 'Email Already Taken')
             return render(request, 'register.html', {'form': form})
         else:
+            allCompanies=company.objects.all()
+            for singleCompany in allCompanies:
+                if singleCompany.email == email:
+                    messages.error(request, 'Email Already Taken')
+                    return render(request, 'register.html', {'form': form})
             form = CompanyForm(request.POST, request.FILES)
             post = request.POST.copy()  # to make it mutable
             import uuid
@@ -147,8 +152,8 @@ def newlogin(login_request):
             # row = cursor.fetchone()
             # print (row)
             # messages.success(login_request, 'Successfully logged In')
-            return redirect('dashboard')
 
+            return redirect('dashboard')
 
 def update(update_response, id):
     obj = userInfo.objects.get(id=id)
@@ -177,6 +182,21 @@ def update(update_response, id):
 
 def welcome(welcomes):
     return render(welcomes, "welcome.html")
+
+def showApps(request):
+    allApps=APP.objects.all()
+    email = request.session.get('email')
+    loggedInCompany = company.objects.get(email=email)
+    # print(loggedInCompany.company_id)
+    companies_apps=list()
+    for app in allApps:
+        # print(app.company_id)
+        if str(app.company_id_id)==str(loggedInCompany.company_id):
+            # print("found")
+            companies_apps.append(app)
+
+    # print(companies_apps)
+    return companies_apps
 
 
 def addapp(request):
@@ -230,7 +250,10 @@ def addapp(request):
 def newaddapp(request):
     if request.method == 'GET':
         form = NewAppForm()
-        return render(request, 'addapp.html', {'form': form})
+        applist=showApps(request)
+        companyid=applist[0].company_id_id
+        return render(request, 'addapp.html', {'form': form, 'applist':applist,'companyID':companyid})
+
     else:
         form = NewAppForm()
         appname = request.POST.get('appname')
@@ -286,7 +309,9 @@ def dashboard(request):
     email = request.session.get('email')
 
     credentials = company.objects.get(email=email)
-    return render(request, 'dashboard.html', {'email': email})
+    applist=showApps(request)
+
+    return render(request, 'dashboard.html', {'applist': applist})
 
 
 def logout(request):
