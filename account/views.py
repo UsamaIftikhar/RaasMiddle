@@ -251,8 +251,11 @@ def newaddapp(request):
     if request.method == 'GET':
         form = NewAppForm()
         applist=showApps(request)
-        companyid=applist[0].company_id_id
-        return render(request, 'addapp.html', {'form': form, 'applist':applist,'companyID':companyid})
+        email = request.session.get('email')
+
+        credentials = company.objects.get(email=email)
+        # companyid=applist[0].company_id_id
+        return render(request, 'addapp.html', {'form': form, 'applist':applist,'companyID':credentials.company_id})
 
     else:
         form = NewAppForm()
